@@ -42,36 +42,44 @@ void init_ports(void) {
 // Start here
 void main() {
    unsigned char idx = 0;
+   unsigned char idx1 = 0;
+   unsigned char idx2 = 0;
+   unsigned char idx3 = 0;
+   
    unsigned char nextval;
-   //unsigned int accu;
+   unsigned int accu;
    init_ports(); 
    // Setup Timer
    T0CS = 0; // T0 clock select, in OPTION_REG, 0 means INTERNAL (CLKOUT)
    PSA = 0; // Prescaler assigned to Timer0 module
-   PS0=0; PS1=1; PS2=0; // Prescaler 1:4
-   TMR0=50;
+   PS0=0; PS1=1; PS2=0; // Prescaler 1:8
+   TMR0=100;
    T0IF = 0; // clear Timer 0 interrupt flag
    
    nextval=map[sine[0]>>1];
    while(1) {
 	  // wait for timer flag
 	  while(!T0IF){} // wait for timer to roll-over
-	  
-	  // put pre-computed value
-	  GPIO = nextval;
-	  
+
 	  // set timer count, clear flag
       TMR0=250;
       T0IF = 0; // clear T0 interrupt flag
 	  
+	  // put pre-computed value
+	  GPIO = nextval;
+	  
 	  // compute next value
-	  //accu = 0;
-	  //accu += sine[idx];
-      //accu += sine[idx];
+	  accu = 0;
+	  accu += sine[idx];
+      //accu += sine[idx1];
+      //accu += sine[idx2];
+      //accu += sine[idx3];
 
-      //nextval = map[accu >> (1+1)]; 
-      nextval = map[sine[idx]>>1]; 
-      idx = ++idx & (SINESLOTS-1);
-      
+      nextval = map[accu >> (1)]; 
+      //nextval = map[sine[idx]>>1]; 
+      idx = (idx+1) & (SINESLOTS-1);
+      //idx1 = (idx1 + 2) & (SINESLOTS-1);
+      //idx2 = (idx1 + 4) & (SINESLOTS-1);
+      //idx3 = (idx1 + 8) & (SINESLOTS-1);
   }
 }

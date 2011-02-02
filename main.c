@@ -41,13 +41,10 @@ void init_ports(void) {
 //////////////////////////////////////////////////////////////////////
 // Start here
 void main() {
-   unsigned char idx;
+   unsigned char idx = 0;
    unsigned char nextval;
    //unsigned int accu;
-
-   init_ports();
-  
-   idx = 0;
+   init_ports(); 
    // Setup Timer
    T0CS = 0; // T0 clock select, in OPTION_REG, 0 means INTERNAL (CLKOUT)
    PSA = 0; // Prescaler assigned to Timer0 module
@@ -70,8 +67,9 @@ void main() {
 	  // compute next value
 	  //accu = 0;
 	  //accu += sine[idx];
+      //accu += sine[idx];
 
-      //nextval = map[accu >> 1]; 
+      //nextval = map[accu >> (1+1)]; 
       nextval = map[sine[idx]>>1]; 
       idx = ++idx & (SINESLOTS-1);
       

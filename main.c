@@ -71,15 +71,15 @@ void main() {
 	  // compute next value
 	  accu = 0;
 	  accu += sine[idx];
-      //accu += sine[idx1];
-      //accu += sine[idx2];
-      //accu += sine[idx3];
+      accu += sine[idx1];
+      accu += sine[idx2];
+      accu += sine[idx3];
 
-      nextval = map[accu >> (1)]; 
+      nextval = map[accu >> (1+2)]; 
       //nextval = map[sine[idx]>>1]; 
       idx = (idx+1) & (SINESLOTS-1);
-      //idx1 = (idx1 + 2) & (SINESLOTS-1);
-      //idx2 = (idx1 + 4) & (SINESLOTS-1);
-      //idx3 = (idx1 + 8) & (SINESLOTS-1);
+      idx1 = (idx1 + 2) & (SINESLOTS-1);
+      idx2 = (idx2 + 3) & (SINESLOTS-1);
+      idx3 = (idx3 + 6) & (SINESLOTS-1);
   }
 }
